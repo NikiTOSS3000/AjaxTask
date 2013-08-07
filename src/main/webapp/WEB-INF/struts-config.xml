@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN"
+          "http://jakarta.apache.org/struts/dtds/struts-config_1_3.dtd">
+
+
+<struts-config>    
+    <form-beans>
+        <form-bean name="newsForm" type="com.epam.testapp.presentation.form.NewsForm"/>
+        <form-bean name="English" type="org.apache.struts.action.DynaActionForm">  
+            <form-property name="language" type="java.lang.String" initial="en" />  
+            <form-property name="country" type="java.lang.String" initial="US" />
+            <form-property name="page" type="java.lang.String" initial="/index.do" />  
+        </form-bean>  
+        
+        <form-bean name="Russian" type="org.apache.struts.action.DynaActionForm">  
+            <form-property name="language" type="java.lang.String" initial="ru" />  
+            <form-property name="country" type="java.lang.String" initial="RU" />
+            <form-property name="page" type="java.lang.String" initial="/index.do" />  
+        </form-bean>  
+    </form-beans>
+    
+    <action-mappings>
+        <action path="/index" type="org.springframework.web.struts.DelegatingActionProxy"
+                parameter="list" name="newsForm" validate="false" scope="request">
+            <forward name="success" path="news.list"/>
+        </action>
+        <action path="/view" type="org.springframework.web.struts.DelegatingActionProxy"
+                parameter="view" name="newsForm" validate="false" scope="request">
+            <forward name="success" path="/pages/tiles/newsView.jsp"/>
+            <forward name="error" path="/pages/tiles/error.jsp"/>
+        </action>
+        <action path="/edit" type="org.springframework.web.struts.DelegatingActionProxy"
+                parameter="edit" name="newsForm" validate="false" scope="request">
+            <forward name="success" path="/pages/tiles/newsAdd.jsp"/>
+            <forward name="error" path="/pages/tiles/error.jsp"/>
+        </action>
+        <action path="/add" type="org.springframework.web.struts.DelegatingActionProxy"
+                parameter="add" name="newsForm" validate="false" scope="request">
+            <forward name="success" path="/pages/tiles/newsAdd.jsp"/>
+        </action>
+        <action path="/cancel" type="org.springframework.web.struts.DelegatingActionProxy"
+                parameter="cancel" name="newsForm" validate="false" scope="request">
+            <forward name="view" path="/view.do"/>
+            <forward name="list" path="/list.do"/>
+        </action>
+        <action path="/save" type="org.springframework.web.struts.DelegatingActionProxy"
+                parameter="save" name="newsForm" validate="false" scope="request">
+            <forward name="success" path="/view.do"/>
+            <forward name="index" path="/list.do"/>
+        </action>
+        <action path="/delete" type="org.springframework.web.struts.DelegatingActionProxy"
+                parameter="delete" name="newsForm" validate="false" scope="request">
+            <forward name="success" path="/list.do"/>
+            <forward name="index" path="/list.do"/>
+        </action>
+        <action path="/list" type="org.springframework.web.struts.DelegatingActionProxy"
+                parameter="list" name="newsForm" validate="false" scope="request">
+            <forward name="success" path="/pages/tiles/newsList.jsp"/>
+        </action>
+        <action path="/toEnglish" name="English"  
+                type="org.apache.struts.actions.LocaleAction">  
+        </action>  
+        <action path="/toRussian" name="Russian"  
+                type="org.apache.struts.actions.LocaleAction">  
+        </action> 
+    </action-mappings>
+	
+    <plug-in className="org.apache.struts.tiles.TilesPlugin" >
+        <set-property property="definitions-config"
+                      value="/WEB-INF/tiles-defs.xml"/>
+        <set-property property="moduleAware" value="true" /> 
+    </plug-in>
+    
+    <message-resources parameter="com.epam.testapp.resources.messages"></message-resources>
+  
+</struts-config>
