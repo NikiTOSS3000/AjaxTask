@@ -53,7 +53,6 @@
         <action path="/delete" type="org.springframework.web.struts.DelegatingActionProxy"
                 parameter="delete" name="newsForm" validate="false" scope="request">
             <forward name="success" path="/list.do"/>
-            <forward name="index" path="/list.do"/>
         </action>
         <action path="/list" type="org.springframework.web.struts.DelegatingActionProxy"
                 parameter="list" name="newsForm" validate="false" scope="request">
